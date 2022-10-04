@@ -1,0 +1,4 @@
+jira:
+  server:  https://freeskymax.atlassian.net/rest/api/2/issue
+  username: abc@gmail.com
+  password:
