@@ -27,8 +27,8 @@ public class PayloadController {
     private final String PULL_REQUEST = "pull_request";
     private final String BODY = "body";
     private final String HTML_URL = "html_url";
-
-    private final String JIRA_ADDRESS = "https://freeskymax.atlassian.net/rest/api/2/issue/{jiraNo}/comment";
+    private final String USER = "user";
+    private final String LOGIN = "login";
 
     @Autowired
     private JiraFeignClient jiraFeignClient;
@@ -59,9 +59,9 @@ public class PayloadController {
 
         LinkedHashMap pullRequest = (LinkedHashMap) obj;
         String body = (String) pullRequest.get(BODY);
-        log.info("-- body: " + body);
-
         String htmlUrl = (String) pullRequest.get(HTML_URL);
+        LinkedHashMap userMap = (LinkedHashMap) pullRequest.get(USER);
+        String login = (String) userMap.get(LOGIN);
 
         if (StringUtils.isEmpty(body)) {
             return "pull request has no comments";
@@ -76,21 +76,15 @@ public class PayloadController {
             log.info(jiraNo);
             log.info(comments);
 
-            sendToJira(jiraNo, comments, htmlUrl);
+            sendToJira(jiraNo, comments, htmlUrl, login);
         }
 
         return "Pull Request successfully handled!";
     }
 
-    protected void sendToJira(String jiraNo, String comments, String htmlUrl) {
-        Map<String, String> values = new HashMap<>();
-        values.put("jiraNo", jiraNo);
-
-        String jiraUrl = StringSubstitutor.replace(JIRA_ADDRESS, values, "{", "}");
-        log.info(jiraUrl);
-
+    protected void sendToJira(String jiraNo, String comments, String htmlUrl, String login) {
         JiraVo vo = new JiraVo();
-        vo.setBody(comments + " " + htmlUrl);
+        vo.setBody("[" + login + "]: " + comments + " " + htmlUrl);
         jiraFeignClient.addComments(vo, jiraNo);
         log.info("--JIRA: add comments successfully!");
     }
