@@ -8,10 +8,10 @@
 		<version>2.7.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.integration</groupId>
 	<artifactId>Jira-Github-Integration</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<version>1.0</version>
+	<name>jira-github-integration</name>
 	<description>Jira Github Integration</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -21,16 +21,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -44,6 +51,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<mainClass>com.integration.DemoApplication</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
