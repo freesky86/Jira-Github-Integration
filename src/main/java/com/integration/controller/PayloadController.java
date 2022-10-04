@@ -40,14 +40,11 @@ public class PayloadController {
     }
 
     @PostMapping("/operation")
-    public String push(@RequestBody Object payload) {
-
+    public String pullRequest(@RequestBody Object payload) {
         if (payload instanceof LinkedHashMap) {
             LinkedHashMap map = (LinkedHashMap) payload;
-
             return handlePayload(map);
         }
-
         return "This is unknown request!";
     }
 
