@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * THis is used to receive the payload from github.
+ */
 
 @Slf4j
 @RestController
