@@ -17,6 +17,7 @@ public class PayloadController {
     @PostMapping("/push")
     public Object push(@RequestBody Object payload) {
         log.info("-- push: " + payload.getClass());
+
         return payload;
     }
 }
