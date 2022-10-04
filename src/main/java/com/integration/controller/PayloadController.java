@@ -20,6 +20,7 @@ public class PayloadController {
     public Object push(@RequestBody Object payload) {
         log.info("-- push: " + payload.getClass());
         log.info(JSON.toJSONString(payload));
+
         return payload;
     }
 }
