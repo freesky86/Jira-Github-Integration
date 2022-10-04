@@ -14,4 +14,9 @@ public class PayloadController {
         return "test jira github integration";
     }
 
+    @PostMapping("/push")
+    public Object push(@RequestBody Object payload) {
+        log.info("-- push: " + payload.getClass());
+        return payload;
+    }
 }
