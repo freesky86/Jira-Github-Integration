@@ -4,16 +4,13 @@ import com.integration.jira.JiraFeignClient;
 import com.integration.jira.JiraVo;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * THis is used to receive the payload from github.
@@ -43,7 +40,8 @@ public class PayloadController {
     public String pullRequest(@RequestBody Object payload) {
         if (payload instanceof LinkedHashMap) {
             LinkedHashMap map = (LinkedHashMap) payload;
-            return handlePayload(map);
+            String result = handlePayload(map);
+            return result;
         }
         return "This is unknown request!";
     }
@@ -61,29 +59,29 @@ public class PayloadController {
         String login = (String) userMap.get(LOGIN);
 
         if (StringUtils.isEmpty(body)) {
-            return "pull request has no comments";
+            return "pull request has no comments: [" + login +"]: " + htmlUrl;
         }
         int pos = body.indexOf(" ");
         if (pos > 0) {
             String jiraNo = body.substring(0, pos);
             String comments = null;
             if (pos < body.length()) {
-                comments = body.substring(pos + 1);
+                comments = body.substring(pos + 1).trim();
             }
-            log.info(jiraNo);
-            log.info(comments);
 
-            sendToJira(jiraNo, comments, htmlUrl, login);
+            return sendToJira(jiraNo, comments, htmlUrl, login);
         }
 
-        return "Pull Request successfully handled!";
+        return "Pull Request has NO comments";
     }
 
-    protected void sendToJira(String jiraNo, String comments, String htmlUrl, String login) {
+    protected String sendToJira(String jiraNo, String comments, String htmlUrl, String login) {
         JiraVo vo = new JiraVo();
         vo.setBody("[" + login + "]: " + comments + " " + htmlUrl);
-        jiraFeignClient.addComments(vo, jiraNo);
+        Object obj = jiraFeignClient.addComments(vo, jiraNo);
         log.info("--JIRA: add comments successfully!");
+
+        return "Pull Request successfully handled!";
     }
 
 }
