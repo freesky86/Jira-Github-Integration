@@ -78,7 +78,7 @@ public class PayloadController {
     protected String sendToJira(String jiraNo, String comments, String htmlUrl, String login) {
         JiraVo vo = new JiraVo();
         vo.setBody("[" + login + "]: " + comments + " " + htmlUrl);
-        Object obj = jiraFeignClient.addComments(vo, jiraNo);
+        jiraFeignClient.addComments(vo, jiraNo);
         log.info("--JIRA: add comments successfully!");
 
         return "Pull Request successfully handled!";
