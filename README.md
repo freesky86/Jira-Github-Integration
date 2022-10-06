@@ -1,6 +1,12 @@
 # Jira-Github-Integration
 
+## 实现方案
 
+1.Github webhook payload
+
+2.This integration application
+
+3.Jira REST API
 
 
 ## Reference:
