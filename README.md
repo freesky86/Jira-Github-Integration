@@ -1,6 +1,15 @@
 # Jira-Github-Integration
 
-Reference:
+## 实现方案
+
+1.Github webhook payload
+
+2.This integration application
+
+3.Jira REST API
+
+
+## Reference:
 
 1.	How to create a Jira ticket using rest API
 https://www.youtube.com/watch?v=D76s__RpQjI
