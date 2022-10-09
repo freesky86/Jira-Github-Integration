@@ -77,7 +77,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<fork>true</fork>
-					<mainClass>com.integration.DemoApplication</mainClass>
+					<mainClass>com.integration.IntegrationApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

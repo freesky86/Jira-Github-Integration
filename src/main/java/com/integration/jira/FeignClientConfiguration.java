@@ -6,16 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Slf4j
 @Configuration
 public class FeignClientConfiguration {
-
     @Value("${jira.username}")
     private String username;
 
     @Value("${jira.password}")
     private String password;
-
 
     @Bean
     public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
