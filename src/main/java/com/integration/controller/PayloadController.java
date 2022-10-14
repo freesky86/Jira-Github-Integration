@@ -5,10 +5,7 @@ import com.integration.jira.JiraVo;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 
@@ -29,6 +26,11 @@ public class PayloadController {
 
     @Autowired
     private JiraFeignClient jiraFeignClient;
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "OK - server works fine";
+    }
 
     @PostMapping("/test")
     public String test() {
@@ -61,6 +63,7 @@ public class PayloadController {
         if (StringUtils.isEmpty(body)) {
             return "pull request has no comments: [" + login +"]: " + htmlUrl;
         }
+        body = body.trim();
         int pos = body.indexOf(" ");
         if (pos > 0) {
             String jiraNo = body.substring(0, pos);
