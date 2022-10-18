@@ -1,5 +1,6 @@
 package com.integration.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.integration.jira.JiraFeignClient;
 import com.integration.jira.JiraVo;
 import io.micrometer.core.instrument.util.StringUtils;
@@ -40,6 +41,11 @@ public class PayloadController {
 
     @PostMapping("/operation")
     public String pullRequest(@RequestBody Object payload) {
+        if (null == payload) {
+            return "This is not github operation";
+        }
+        log.info("-- Github Payload Request:");
+        log.info(JSON.toJSONString(payload));
         if (payload instanceof LinkedHashMap) {
             LinkedHashMap map = (LinkedHashMap) payload;
             String result = handlePayload(map);
